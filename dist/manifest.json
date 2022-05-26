@@ -1,8 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "Chrome Extension (built with TypeScript + React)",
-    "description":
-        "A boilerplate project to quickly build a Chrome extension using TypeScript and React (built using webpack).",
+    "name": "vrc-fav-extension",
+    "description": "",
     "version": "1.0.0",
     "action": {
         "default_icon": "icon16.png",
@@ -17,5 +16,5 @@
         "128": "icon128.png"
     },
     "permissions": ["cookies","tabs"],
-    "host_permissions": ["<all_urls>"] 
+    "host_permissions": ["https://vrchat.com/home*"] 
 }

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./Popup.scss";
 
+// 拡張機能のポップアップにState保存するとポップアップ消したときにStateも消える
 const vrchatApi = {
   url: 'https://vrchat.com/api/1' as const,
   apiKey: 'JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26' as const,
@@ -23,20 +24,19 @@ const Popup = () => {
     chrome.tabs.onUpdated.addListener(fetchData);
   }, []);
 
-  useEffect(() => {
-    console.log(url.href);  
-  },[url]);
-
-  const registFavorite = async (targeUrl:URL) => {
-    const path = targeUrl.pathname.split("/");
+  const registFavorite = ():void => {
+    const path = url.pathname.split("/");
     const worldId = path[path.length-1];
-    return await axios.post(`${vrchatApi.url}/favorites`, {
+    axios.post(`${vrchatApi.url}/favorites`, {
       "type": "world",
       "favoriteId": worldId,
       "tags": [
         favoriteGroup
       ]
-    });
+    }).then(
+      res => alert("success!")
+      ,value => alert(value.response.data.error.message)
+    );
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -51,7 +51,7 @@ const Popup = () => {
         <option>worlds3</option>
         <option>worlds4</option>
       </select>
-      <button type="button" onClick={() => registFavorite(url)}>FavRegist</button>
+      <button type="button" onClick={registFavorite}>FavRegist</button>
     </div>
   );
 }
